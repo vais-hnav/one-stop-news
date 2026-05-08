@@ -37,7 +37,7 @@ Static frontend project with embedded live news streams.
 1. Download or clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+git clone https://github.com/vais-hnav/one-stop-news.git
 ```
 
 2. Open the project folder
