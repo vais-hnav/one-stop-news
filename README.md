@@ -32,6 +32,11 @@ A simple Malayalam live news streaming website that brings multiple popular Kera
 
 Static frontend project with embedded live news streams.
 
+```bash
+https://vais-hnav.github.io/one-stop-news/
+```
+
+
 ## How to Run
 
 1. Download or clone the repository
