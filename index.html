@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Stop News – Malayalam News Live</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;700&family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f; --surface: #111118; --card: #16161f; --border: #252535;
+      --accent: #e8343a; --accent2: #ff6b35; --text: #f0f0f8; --muted: #8888aa; --live: #22dd66;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+    header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.95); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px; }
+    .logo-text { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:1px; }
+    .logo-text span { color: var(--accent); }
+    .header-right { display:flex; align-items:center; gap:16px; }
+    .live-badge { display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--live);letter-spacing:1px;text-transform:uppercase; }
+    .live-dot { width:8px;height:8px;background:var(--live);border-radius:50%;animation:pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)} }
+    .ch-count { font-size:12px;color:var(--muted); }
+    .hero { background: linear-gradient(135deg,#0f0f1e 0%,#1a0a0c 50%,#0a0a0f 100%); border-bottom: 1px solid var(--border); padding: 28px 24px 22px; position:relative; overflow:hidden; }
+    .hero::before { content:'';position:absolute;top:-40%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(232,52,58,.12) 0%,transparent 70%);pointer-events:none; }
+    .hero-title { font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,52px);letter-spacing:2px;line-height:1;margin-bottom:6px; }
+    .hero-title span { background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+    .hero-ml { font-family:'Noto Sans Malayalam',sans-serif;font-size:14px;color:var(--muted);margin-bottom:10px; }
+    .pills { display:flex;flex-wrap:wrap;gap:6px;margin-top:10px; }
+    .pill { background:var(--card);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--muted);text-decoration:none;transition:all .2s; }
+    .pill:hover { border-color:var(--accent);color:var(--text);background:rgba(232,52,58,.1); }
+    main { max-width:960px;margin:0 auto;padding:32px 16px 60px;display:flex;flex-direction:column;gap:36px; }
+    .card { background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color .2s; }
+    .card:hover { border-color:rgba(232,52,58,.4); }
+    .card-head { display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--surface);border-bottom:1px solid var(--border); }
+    .ch-info { display:flex;align-items:center;gap:12px; }
+    .ch-logo { width:44px;height:44px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:10px;color:var(--text);letter-spacing:.5px;text-align:center; }
+    .ch-name { font-weight:600;font-size:16px; }
+    .ch-ml { font-family:'Noto Sans Malayalam',sans-serif;font-size:12px;color:var(--muted);margin-top:2px; }
+    .live-tag { display:flex;align-items:center;gap:5px;background:rgba(34,221,102,.12);border:1px solid rgba(34,221,102,.3);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--live);letter-spacing:.8px; }
+    .live-tag .dot { width:6px;height:6px;background:var(--live);border-radius:50%;animation:pulse 1.5s infinite; }
+    .vid { position:relative;width:100%;padding-bottom:56.25%;background:#000; }
+    .vid iframe { position:absolute;inset:0;width:100%;height:100%;border:none; }
+    footer { text-align:center;padding:24px;font-size:12px;color:var(--muted);border-top:1px solid var(--border); }
+    footer a { color:var(--accent);text-decoration:none; }
+    .scroll-top { position:fixed;bottom:24px;right:24px;width:44px;height:44px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 20px rgba(232,52,58,.4);z-index:99;opacity:0;pointer-events:none;transition:opacity .3s;text-decoration:none;color:white; }
+    .scroll-top.visible { opacity:1;pointer-events:all; }
+    @media(max-width:600px){header{padding:0 14px}.hero{padding:20px 16px 16px}main{padding:20px 10px 50px;gap:24px}.card-head{padding:12px 14px}}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">📡</div>
+    <div class="logo-text">One <span>Stop</span> News</div>
+  </div>
+  <div class="header-right">
+    <div class="live-badge"><span class="live-dot"></span>LIVE</div>
+    <div class="ch-count">7 Channels</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-title">Malayalam <span>News</span> Live</div>
+  <div class="hero-ml">മലയാളം വാർത്ത തത്സമയം &middot; All major Kerala news channels in one place</div>
+  <div class="pills">
+    <a class="pill" href="#ch1">Manorama News</a>
+    <a class="pill" href="#ch2">Asianet News</a>
+    <a class="pill" href="#ch3">Mathrubhumi</a>
+    <a class="pill" href="#ch4">24 News</a>
+    <a class="pill" href="#ch5">MediaOne</a>
+    <a class="pill" href="#ch6">Reporter TV</a>
+    <a class="pill" href="#ch7">Janam TV</a>
+  </div>
+</div>
+
+<main>
+
+  <div class="card" id="ch1">
+    <div class="card-head">
+      <div class="ch-info">
+        <div class="ch-logo" style="background:#001a4d;color:#ffcc00;">MANORAMA<br>NEWS</div>
+        <div><div class="ch-name">Manorama News</div><div class="ch-ml">മനോരമ ന്യൂസ്</div></div>
+      </div>
+      <div class="live-tag"><span class="dot"></span>LIVE</div>
+    </div>
+    <div class="vid">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/d9_xuULn8xw?si=vxw6UyrAQx-DiBR3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="card" id="ch2">
+    <div class="card-head">
+      <div class="ch-info">
+        <div class="ch-logo" style="background:#0a1628;color:#ff6600;">ASIANET<br>NEWS</div>
+        <div><div class="ch-name">Asianet News</div><div class="ch-ml">ഏഷ്യാനെറ്റ് ന്യൂസ്</div></div>
+      </div>
+      <div class="live-tag"><span class="dot"></span>LIVE</div>
+    </div>
+    <div class="vid">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/s0LLVQeMmtU?si=C2aLxHvyks7F-xMx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="card" id="ch3">
+    <div class="card-head">
+      <div class="ch-info">
+        <div class="ch-logo" style="background:#1a0000;color:#ff4444;font-size:9px;">MATHRUBHUMI<br>NEWS</div>
+        <div><div class="ch-name">Mathrubhumi News</div><div class="ch-ml">മാതൃഭൂമി ന്യൂസ്</div></div>
+      </div>
+      <div class="live-tag"><span class="dot"></span>LIVE</div>
+    </div>
+    <div class="vid">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/YGEgelAiUf0?si=iwCBJ48mQ23SdcCd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="card" id="ch4">
+    <div class="card-head">
+      <div class="ch-info">
+        <div class="ch-logo" style="background:#000d1a;color:#00aaff;font-size:22px;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">24</div>
+        <div><div class="ch-name">24 News</div><div class="ch-ml">ഇരുപത്തിനാല് ന്യൂസ്</div></div>
+      </div>
+      <div class="live-tag"><span class="dot"></span>LIVE</div>
+    </div>
+    <div class="vid">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/1wECsnGZcfc?si=e7_XjxE5skV7y7X1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="card" id="ch5">
+    <div class="card-head">
+      <div class="ch-info">
+        <div class="ch-logo" style="background:#002211;color:#44dd88;">MEDIA<br>ONE</div>
+        <div><div class="ch-name">MediaOne TV</div><div class="ch-ml">മീഡിയവൺ</div></div>
+      </div>
+      <div class="live-tag"><span class="dot"></span>LIVE</div>
+    </div>
+    <div class="vid">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/-8d8-c0yvyU?si=0Ebsn7g1EAN-Pzla" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="card" id="ch6">
+    <div class="card-head">
+      <div class="ch-info">
+        <div class="ch-logo" style="background:#1a1800;color:#ffdd00;">REPORTER<br>TV</div>
+        <div><div class="ch-name">Reporter TV</div><div class="ch-ml">റിപ്പോർട്ടർ ടിവി</div></div>
+      </div>
+      <div class="live-tag"><span class="dot"></span>LIVE</div>
+    </div>
+    <div class="vid">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/nObUcHKZEGY?si=WkCkN112-ba5aclH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="card" id="ch7">
+    <div class="card-head">
+      <div class="ch-info">
+        <div class="ch-logo" style="background:#001a33;color:#66ccff;">JANAM<br>TV</div>
+        <div><div class="ch-name">Janam TV</div><div class="ch-ml">ജനം ടിവി</div></div>
+      </div>
+      <div class="live-tag"><span class="dot"></span>LIVE</div>
+    </div>
+    <div class="vid">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/T9Ol2JHqKlM?si=dcpYWz8i9UyM20A2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="#">One Stop News</a> &nbsp;&middot;&nbsp; Malayalam News Live &nbsp;&middot;&nbsp; All streams via YouTube &nbsp;&middot;&nbsp; മലയാളം വാർത്ത തത്സമയം</p>
+</footer>
+
+<a class="scroll-top" href="#" id="scrollBtn">&#8593;</a>
+
+<script>
+  const btn = document.getElementById('scrollBtn');
+  window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+</script>
+
+</body>
+</html>
